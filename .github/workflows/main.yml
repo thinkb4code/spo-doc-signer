@@ -24,7 +24,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install Gulp
-      run: npm gulp-cli --global 
+      run: npm i gulp-cli --global 
 
     - name: NPM install
       run: npm install
