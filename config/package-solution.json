@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "spo-doc-sign-client-side-solution",
+    "id": "61ed162e-9b83-4fc1-8560-10854ef39533",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.19.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "spo-doc-sign description"
+      },
+      "longDescription": {
+        "default": "spo-doc-sign description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "spo-doc-sign Feature",
+        "description": "The feature that activates elements of the spo-doc-sign solution.",
+        "id": "19a6de10-85c3-45c3-92d6-dacb07a9d90f",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/spo-doc-sign.sppkg"
+  }
+}
