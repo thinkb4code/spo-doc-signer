@@ -11,6 +11,7 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'DocumentSignerWebPartStrings';
 import DocumentSigner from './components/DocumentSigner';
 import { IDocumentSignerProps } from './components/IDocumentSignerProps';
+import SPDocumentService from './service/SPDocument.svc';
 
 export interface IDocumentSignerWebPartProps {
   description: string;
@@ -20,6 +21,7 @@ export default class DocumentSignerWebPart extends BaseClientSideWebPart<IDocume
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
+  private spSvc: SPDocumentService;
 
   public render(): void {
     const element: React.ReactElement<IDocumentSignerProps> = React.createElement(
@@ -37,12 +39,14 @@ export default class DocumentSignerWebPart extends BaseClientSideWebPart<IDocume
   }
 
   protected onInit(): Promise<void> {
+    this.spSvc = new SPDocumentService(this.context);
+
+    this.spSvc.GetFolderItems(`${this.context.pageContext.web.serverRelativeUrl}/Lists/DocSigner/Doc-001`);
+    
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });
   }
-
-
 
   private _getEnvironmentMessage(): Promise<string> {
     if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook

@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "GreatVibes";
+    src: url('../fonts/GreatVibes.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "DancingScript";
+    src: url('../fonts/DancingScript.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.getUserSignature {
+    .signOne {
+        font-family: "GreatVibes";
+        font-size: 1.5rem;
+    }
+
+    .signTwo {
+        font-family: "DancingScript";
+        font-size: 1.5rem;
+    }
+}
