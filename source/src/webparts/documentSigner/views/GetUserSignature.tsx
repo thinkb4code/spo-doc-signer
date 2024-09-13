@@ -5,6 +5,7 @@ import styles from '../assets/css/GetUserSignature.module.scss';
 
 const GetUserSignature: React.FC<IGetUserSignatureProps> = ({ }) => {
     const [userName, setUserName] = useState<string>("");
+    const [typeSign, setTypeSign] = useState<boolean>(true);
     const [signatureData, setSignatureData] = useState<string | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     
@@ -67,42 +68,52 @@ const GetUserSignature: React.FC<IGetUserSignatureProps> = ({ }) => {
     return (
         <div className={styles.getUserSignature}>
             <h2>Select your signature</h2>
-            <div>
-                <div>Enter your full name: </div>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Type something..."
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                        style={{ padding: "10px", width: "100%", marginBottom: "20px" }}
-                    />
-                </div>
+            <div className={styles.signOptions}>
+                <span onClick={e => setTypeSign(true)} className={typeSign ? styles.active : ''}>Type</span>
+                <span onClick={e => setTypeSign(false)} className={!typeSign ? styles.active : ''}>Draw</span>
             </div>
-            <div>
-                <div className={styles.signOne}>{userName}</div>
-                <div className={styles.signTwo}>{userName}</div>
-                <div>
-                    <div>Use custom signature</div>
+            {
+                typeSign && <div className={styles.singSelector}>
                     <div>
-                        <canvas ref={canvasRef} width={500} height={200} style={{ border: '1px solid #000' }}
-                            onMouseDown={startDrawing}
-                            onMouseMove={draw}
-                            onMouseUp={stopDrawing}
-                            onMouseLeave={stopDrawing}
+                        <input
+                            type="text"
+                            placeholder="Type something..."
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            style={{ padding: "10px", width: "100%", marginBottom: "20px" }}
                         />
-                        <br />
-                        <button onClick={clearCanvas}>Clear</button>
-                        <button onClick={saveSignature}>Save</button>
-                        {signatureData && (
-                            <div>
-                                <p><a href={signatureData} download="signature.png">Download Signature</a></p>
-                                <img src={signatureData} alt="Signature Preview" style={{ border: '1px solid #000', marginTop: '10px' }} />
-                            </div>
-                        )}
+                    </div>
+                    <div>
+                        <div className={styles.signOne}>{userName}</div>
+                        <div className={styles.signTwo}>{userName}</div>
                     </div>
                 </div>
-            </div>
+            }
+            {
+                !typeSign && <div className={styles.singSelector}>                
+                    <div>
+                        <div>Use custom signature</div>
+                        <div>
+                            <canvas ref={canvasRef} width={500} height={200} style={{ border: '1px solid #000' }}
+                                onMouseDown={startDrawing}
+                                onMouseMove={draw}
+                                onMouseUp={stopDrawing}
+                                onMouseLeave={stopDrawing}
+                            />
+                            <br />
+                            <button onClick={clearCanvas}>Clear</button>
+                            <button onClick={saveSignature}>Save</button>
+                            {signatureData && (
+                                <div>
+                                    <p><a href={signatureData} download="signature.png">Download Signature</a></p>
+                                    <img src={signatureData} alt="Signature Preview" style={{ border: '1px solid #000', marginTop: '10px' }} />
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            }
+            
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { spfi, SPFI, SPFx } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
+import { IPageContent } from "../model/DocumentRender.model";
 
 export default class SPDocumentService {
     private spfxCtx: SPFI;
@@ -12,14 +13,10 @@ export default class SPDocumentService {
         this.spfxCtx = spfi().using(SPFx(wpCtx)).using(PnPLogging(LogLevel.Warning));
     }
 
-    public async GetFolderItems(folderPath: string): Promise<void> {
-        const docItems = await this.spfxCtx.web.lists.getByTitle('DocSigner').items
-            .select('Title', 'Content')
-            .filter(`FileDirRef eq '${folderPath}'`)
-            .orderBy('SortOrder', true)();
-
-        console.log(docItems);
-        debugger;
-        return Promise.resolve();
+    public async GetFolderItems(folderPath: string): Promise<IPageContent[]> {
+        return await this.spfxCtx.web.lists.getByTitle('DocSigner').items
+        .select('Title', 'Content')
+        .filter(`FileDirRef eq '${folderPath}'`)
+        .orderBy('SortOrder', true)();
     }
 }
