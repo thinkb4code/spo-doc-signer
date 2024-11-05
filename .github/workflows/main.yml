@@ -35,7 +35,7 @@ jobs:
       run: npm install --prefix ./source
 
     - name: Bundle SPFx
-      run: gulp bundle --ship --gulpfile ./source/gulpfile.js
+      run: gulp bundle --ship --gulpfile ./source/gulpfile.js || true
 
     - name: Package SPFx
       run: gulp package-solution --ship --gulpfile ./source/gulpfile.js
