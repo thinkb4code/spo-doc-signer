@@ -25,6 +25,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Open Source folder
+      run: cd ./source
+
     - name: Install Gulp
       run: npm i gulp-cli --global 
 
