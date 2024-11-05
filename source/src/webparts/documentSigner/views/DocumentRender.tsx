@@ -1,7 +1,6 @@
 import * as React from "react";
 import styles from "../assets/css/DocumentRender.module.scss";
 import { IDocumentRenderProps, IPageContent } from "../model/DocumentRender.model";
-import * as _ from '@microsoft/sp-lodash-subset';
 
 const DocumentRender: React.FC<IDocumentRenderProps> = ({pages}) => {
     const pageHeight = 11 * 96; // 11 inches in pixels (96px per inch)
@@ -25,8 +24,7 @@ const DocumentRender: React.FC<IDocumentRenderProps> = ({pages}) => {
     };
 
     // Helper function to create a promise that resolves when an image loads
-    // @ts-ignore
-    const imageLoadPromise = (img: HTMLImageElement) => new Promise((resolve, reject) => {
+    const imageLoadPromise = (img: HTMLImageElement): Promise<any> => new Promise((resolve, reject) => {
         if (img.complete) {
             resolve(true);
         } else {
@@ -52,12 +50,10 @@ const DocumentRender: React.FC<IDocumentRenderProps> = ({pages}) => {
             if(currentPage.scrollHeight > pageHeight) {
                 currentPage.querySelector('.content')?.removeChild(currentElem);
                 if(currentElem.children.length > 0) {
-                    //const parent = currentElem.cloneNode(false);
                     const childernElem = Array.prototype.slice.call(currentElem.children);
 
                     for(let i=0; i < childernElem.length; i++){
-                        debugger;
-                        let parent = currentElem.cloneNode(false) as Element;
+                        const parent = currentElem.cloneNode(false) as Element;
                         const currElem = childernElem[i];
                         parent.appendChild(currElem);
                         await fitContentInPage(currElem);
@@ -84,9 +80,9 @@ const DocumentRender: React.FC<IDocumentRenderProps> = ({pages}) => {
     };
 
     React.useEffect(() => {
-        pages.map((p: IPageContent) => {
+        pages.map(async (p: IPageContent, i: number) => {
             const docContent = parser.parseFromString(p.Content, 'text/html');
-            setupPage(docContent);
+            await setupPage(docContent).then(p => console.log(`Page setup complete: ${i}`));
         });
     });
 
