@@ -39,3 +39,10 @@ jobs:
 
     - name: Package SPFx
       run: gulp package-solution --ship --gulpfile ./source/gulpfile.js
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: spfx-package
+        path: ./source/sharepoint/solution/spo-doc-sign.sppkg
+        retention-days: 60     
